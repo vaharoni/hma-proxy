@@ -1,0 +1,11 @@
+#!/bin/bash
+
+PORT=${PORT:-"8118"}
+sed -i 's/8118/'"$PORT"'/g' /etc/privoxy/config
+
+echo $USERNAME > /tmp/login.conf
+echo $PASSWORD >> /tmp/login.conf
+sed -i 's/_SERVER_/'"$SERVER"'/g' /etc/supervisor/conf.d/supervisord.conf
+
+# exec /usr/bin/supervisord
+exec /usr/bin/hma-runner.sh SERVER=$SERVER
